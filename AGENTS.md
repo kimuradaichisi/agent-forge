@@ -24,3 +24,20 @@ When investigating bugs, errors, or test failures, use the `scientific-debugging
 - Formulate a single root-cause hypothesis before making any code change.
 - Make the smallest atomic fix addressing only the root cause.
 - Deterministically verify that the reproduction test passes and the full test suite suffers no regressions.
+
+## Spec-Driven Development
+
+When implementing new features or modifying behavior, use the `spec-driven-dev` skill.
+
+- Establish Given-When-Then acceptance criteria before coding.
+- Declare and lock the file boundary; reject edits to unapproved files.
+- Enforce Red-First (write failing tests before implementation).
+
+## PR Guardian
+
+Before shipping or opening a pull request, use the `pr-guardian` skill.
+
+- Clean diffs of residual debug code (`print`, `console.log`, `debugger`).
+- Check for leaked secrets or keys.
+- Perform blast-radius caller analysis on modified symbols using `rg`.
+- Generate structured PR verification summary.

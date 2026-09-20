@@ -10,6 +10,16 @@
       "path": "skills/scientific-debugging",
       "description": "Enforce minimal reproduction tests and hypothesis verification before modifying application code.",
       "platforms": ["claude", "codex", "gemini"]
+    },
+    "spec-driven-dev": {
+      "path": "skills/spec-driven-dev",
+      "description": "Specification consensus, strict file boundary locking, and test-first implementation.",
+      "platforms": ["claude", "codex", "gemini"]
+    },
+    "pr-guardian": {
+      "path": "skills/pr-guardian",
+      "description": "Pre-ship hygiene scan, blast-radius caller analysis, and automated PR manifest generation.",
+      "platforms": ["claude", "codex", "gemini"]
     }
   }
 }

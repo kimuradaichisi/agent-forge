@@ -5,7 +5,9 @@ Portable engineering workflows for AI coding agents.
 AgentForge standardizes **how agents work**, independently from the tools they use. It bundles portable engineering skills:
 
 - **`lean-routing`**: Routes work through the cheapest reliable path (Deterministic tools -> Cheap worker -> Strong reasoning -> Mechanical verification).
-- **`scientific-debugging`**: Eliminates trial-and-error code churn by requiring a minimal failing reproduction test before touching any production code.
+- **`scientific-debugging`**: Cost-aware hypothesis testing (Fast-path for trivial bugs, Strict Gate reproduction tests for non-trivial issues).
+- **`spec-driven-dev`**: Specification consensus (Given-When-Then), strict file boundary locking, and Red-First TDD discipline.
+- **`pr-guardian`**: Pre-ship hygiene checks, blast-radius caller analysis with `rg`, and automated ready-to-merge PR manifests.
 
 Adapters are included for Claude Code, OpenAI Codex, and Gemini CLI. The core skills are platform-neutral; model names and CLI-specific wiring live only in adapters.
 
@@ -80,7 +82,9 @@ Preview & Uninstall:
 agent-forge/
 ├── skills/
 │   ├── lean-routing/          # cost-aware delegation
-│   └── scientific-debugging/  # hypothesis-driven bug fixing
+│   ├── scientific-debugging/  # hypothesis-driven bug fixing
+│   ├── spec-driven-dev/       # boundary-locked TDD
+│   └── pr-guardian/           # blast-radius scan & PR manifests
 ├── adapters/
 │   ├── claude/             # model + subagent wiring
 │   ├── codex/

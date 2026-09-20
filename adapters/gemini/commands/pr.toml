@@ -1,0 +1,13 @@
+description = "Pre-ship hygiene scan and PR manifest generation using AgentForge pr-guardian."
+prompt = """
+Use the `pr-guardian` skill to inspect the current changes before commit or pull request.
+
+Follow the 4-step protocol:
+1. Hygiene & Secret Scan: Ensure zero leftover debug calls (print, console.log, debugger) and zero leaked secrets.
+2. Blast-Radius Analysis: Scan repository call-sites with rg for all modified functions/symbols.
+3. Doc-Sync Check: Ensure documentation matches modified signatures/configs.
+4. Output structured pr-manifest.md with full verification proof.
+
+Context / notes:
+{{args}}
+"""

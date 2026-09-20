@@ -1,7 +1,7 @@
 <!-- agentforge:lean-routing:start -->
 ## AgentForge Workflows
 
-### Lean Routing
+### 1. Lean Routing
 Use the `lean-routing` skill for engineering tasks where cost-aware delegation applies:
 - Execute one trivial deterministic operation directly rather than spawning an agent.
 - Delegate repeated/read-heavy/high-volume low-judgment work to `cheap-ops`.
@@ -12,7 +12,7 @@ Use the `lean-routing` skill for engineering tasks where cost-aware delegation a
 - Cheap workers return `ESCALATE` rather than guess.
 - Prefer deterministic verification after edits.
 
-### Scientific Debugging
+### 2. Scientific Debugging
 When investigating bugs, errors, or test failures, use the `scientific-debugging` skill:
 - **Triage First**:
   - *Fast-Path (Obvious Fix)*: For typos, syntax errors, or unambiguous stack traces, apply a 1-line atomic fix immediately and verify.
@@ -20,4 +20,16 @@ When investigating bugs, errors, or test failures, use the `scientific-debugging
 - Formulate a single root-cause hypothesis before editing.
 - Apply the smallest atomic fix addressing only the root cause.
 - Verify deterministically that the repro passes and no regressions occur.
+
+### 3. Spec-Driven Development
+When building features or modifying behavior, use the `spec-driven-dev` skill:
+- Formulate Given-When-Then acceptance criteria before writing code.
+- Explicitly declare the allowed file boundary; never edit files outside the boundary.
+- Write tests first and verify they FAIL (Red) before implementing code (Green).
+
+### 4. PR Guardian
+Before shipping or submitting a PR, use the `pr-guardian` skill:
+- Ensure zero residual debug prints (`print`, `console.log`, `debugger`) and zero secrets.
+- Perform blast-radius caller analysis on modified symbols using `rg`.
+- Generate a structured `pr-manifest.md` ready for review.
 <!-- agentforge:lean-routing:end -->

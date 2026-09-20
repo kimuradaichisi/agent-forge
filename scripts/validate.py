@@ -11,6 +11,8 @@ REQUIRED = [
     'registry/skills.json', 'registry/platforms.json',
     'skills/lean-routing/SKILL.md',
     'skills/scientific-debugging/SKILL.md',
+    'skills/spec-driven-dev/SKILL.md',
+    'skills/pr-guardian/SKILL.md',
     'installers/install.sh', 'installers/uninstall.sh',
     'installers/install.ps1', 'installers/uninstall.ps1',
     'adapters/claude/CLAUDE.md.snippet',
@@ -40,6 +42,14 @@ def main() -> int:
     if not debug_skill.startswith('---\n') or 'name: scientific-debugging' not in debug_skill:
         errors.append('invalid scientific-debugging SKILL.md frontmatter')
 
+    spec_skill = (ROOT / 'skills/spec-driven-dev/SKILL.md').read_text(encoding='utf-8')
+    if not spec_skill.startswith('---\n') or 'name: spec-driven-dev' not in spec_skill:
+        errors.append('invalid spec-driven-dev SKILL.md frontmatter')
+
+    pr_skill = (ROOT / 'skills/pr-guardian/SKILL.md').read_text(encoding='utf-8')
+    if not pr_skill.startswith('---\n') or 'name: pr-guardian' not in pr_skill:
+        errors.append('invalid pr-guardian SKILL.md frontmatter')
+
     snippets = {
         'claude': 'CLAUDE.md.snippet',
         'codex': 'AGENTS.md.snippet',
@@ -56,7 +66,7 @@ def main() -> int:
         except Exception as exc:
             errors.append(f'invalid TOML {path.relative_to(ROOT)}: {exc}')
 
-    for cmd_file in ('lean.toml', 'debug.toml'):
+    for cmd_file in ('lean.toml', 'debug.toml', 'spec.toml', 'pr.toml'):
         try:
             tomllib.loads((ROOT / f'adapters/gemini/commands/{cmd_file}').read_text(encoding='utf-8'))
         except Exception as exc:

@@ -20,11 +20,11 @@ else
     gemini) SKILL_DIR="$TARGET/.agents/skills"; AGENTS="$TARGET/.gemini/agents"; INST="$TARGET/GEMINI.md"; CMDS="$TARGET/.gemini/commands";;
   esac
 fi
-run rm -rf "$SKILL_DIR/lean-routing" "$SKILL_DIR/scientific-debugging"
+run rm -rf "$SKILL_DIR/lean-routing" "$SKILL_DIR/scientific-debugging" "$SKILL_DIR/spec-driven-dev" "$SKILL_DIR/pr-guardian"
 case "$PLATFORM" in
   claude) for f in cheap-ops.md cheap-edit.md cheap-coder.md reviewer.md; do run rm -f "$AGENTS/$f"; done;;
   codex) for f in cheap_ops.toml cheap_edit.toml cheap_coder.toml reviewer.toml; do run rm -f "$AGENTS/$f"; done;;
-  gemini) for f in cheap-ops.md cheap-edit.md cheap-coder.md reviewer.md; do run rm -f "$AGENTS/$f"; done; run rm -f "$CMDS/lean.toml" "$CMDS/debug.toml";;
+  gemini) for f in cheap-ops.md cheap-edit.md cheap-coder.md reviewer.md; do run rm -f "$AGENTS/$f"; done; run rm -f "$CMDS/lean.toml" "$CMDS/debug.toml" "$CMDS/spec.toml" "$CMDS/pr.toml";;
 esac
 if [[ -f "$INST" ]]; then
   if ((DRY)); then echo "[dry-run] remove AgentForge block from $INST"; else

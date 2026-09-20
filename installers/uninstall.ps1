@@ -97,6 +97,8 @@ if ($Global) {
 # 1. Remove skill directories
 Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "lean-routing")
 Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "scientific-debugging")
+Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "spec-driven-dev")
+Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "pr-guardian")
 
 # 2. Remove agent files
 switch ($Platform) {
@@ -116,6 +118,8 @@ switch ($Platform) {
         }
         Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "lean.toml")
         Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "debug.toml")
+        Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "spec.toml")
+        Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "pr.toml")
     }
 }
 

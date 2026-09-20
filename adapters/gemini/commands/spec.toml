@@ -1,0 +1,14 @@
+description = "Develop a feature using AgentForge spec-driven-dev protocol."
+prompt = """
+Use the `spec-driven-dev` skill for this feature request.
+
+Follow the 5-step protocol strictly:
+1. Define Acceptance Criteria in Given-When-Then format (draft with @cheap-ops).
+2. Declare explicitly the allowed file boundary. Modifications outside this boundary are prohibited.
+3. Write test cases first (@cheap-coder). Run tests and assert they FAIL (RED).
+4. Implement minimal production code within the boundary to pass tests (@cheap-coder) (GREEN).
+5. Refactor and verify full test suite with zero regressions. Output spec-manifest.md.
+
+Feature request:
+{{args}}
+"""
