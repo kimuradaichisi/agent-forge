@@ -15,7 +15,9 @@ Use the `lean-routing` skill for engineering tasks where cost-aware delegation a
 
 ### Scientific Debugging
 When investigating bugs, errors, or test failures, use the `scientific-debugging` skill:
-- **Strict rule**: Never modify application code until you have a minimal repro test that demonstrably FAILS.
+- **Triage First**:
+  - *Fast-Path (Obvious Fix)*: For typos, syntax errors, or unambiguous stack traces, apply a 1-line atomic fix immediately and verify.
+  - *Strict Gate (Non-Trivial / Logic / Regressions)*: If the cause is non-obvious or if a fast-path attempt fails, NEVER touch application code until you have created a minimal repro test that demonstrably FAILS.
 - Formulate a single root-cause hypothesis before editing.
 - Apply the smallest atomic fix addressing only the root cause.
 - Verify deterministically that the repro passes and no regressions occur.
