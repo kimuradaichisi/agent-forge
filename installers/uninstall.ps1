@@ -99,6 +99,7 @@ Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "lean-routing")
 Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "scientific-debugging")
 Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "spec-driven-dev")
 Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "pr-guardian")
+Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "codebase-cartographer")
 
 # 2. Remove agent files
 switch ($Platform) {
@@ -120,6 +121,7 @@ switch ($Platform) {
         Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "debug.toml")
         Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "spec.toml")
         Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "pr.toml")
+        Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "map.toml")
     }
 }
 

@@ -20,6 +20,11 @@
       "path": "skills/pr-guardian",
       "description": "Pre-ship hygiene scan, blast-radius caller analysis, and automated PR manifest generation.",
       "platforms": ["claude", "codex", "gemini"]
+    },
+    "codebase-cartographer": {
+      "path": "skills/codebase-cartographer",
+      "description": "Ultra-lightweight deterministic codebase mapping and symbol skeleton generation.",
+      "platforms": ["claude", "codex", "gemini"]
     }
   }
 }

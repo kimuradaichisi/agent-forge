@@ -1,0 +1,11 @@
+description = "Generate a lightweight codebase architecture and symbol map using codebase-cartographer."
+prompt = """
+Use the `codebase-cartographer` skill to map the repository.
+
+1. Execute `generate_map.py` deterministically (Zero LLM cost) to extract the file tree and symbol skeleton.
+2. Identify core entry points, primary module responsibilities, and key data flows.
+3. Output a concise repo-map.md guide. Do not perform mass full-file reads.
+
+Target / focus area:
+{{args}}
+"""

@@ -3,8 +3,8 @@
 from __future__ import annotations
 import sys
 
-DIRECT=("git status","rg ","grep ","run test","format","lint")
-CHEAP=("scan","summarize","extract","classify","inventory","rename","normalize")
+DIRECT=("git status","rg ","grep ","run test","format","lint","map","cartograph","skeleton")
+CHEAP=("scan","summarize","extract","classify","inventory","rename","normalize","explore","overview")
 STRONG=("architecture","design","trade-off","tradeoff","ambiguous","security","migration","concurrency","distributed","debug")
 
 def classify(task: str) -> str:

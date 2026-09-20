@@ -14,6 +14,14 @@ For repository and engineering work, use the `gemini-lean-routing` skill when ap
 - Cheap agents must return `ESCALATE` rather than guess.
 - Prefer deterministic verification over another LLM call.
 
+## Codebase Cartographer
+
+When exploring, onboarding, or investigating repository structure, use the `codebase-cartographer` skill.
+
+- **Strict Rule**: NEVER perform mass full-file reads to explore. Run `generate_map.py` first (L0 / Zero cost).
+- Use the symbol skeleton to orient yourself, locate entry points, and guide targeted slice reads.
+- Always trigger before `spec-driven-dev` (to set boundaries) and `scientific-debugging` (to trace callers).
+
 ## Scientific Debugging
 
 When investigating bugs, errors, or test failures, use the `scientific-debugging` skill.

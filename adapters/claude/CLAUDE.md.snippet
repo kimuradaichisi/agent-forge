@@ -12,7 +12,19 @@ Use the `lean-routing` skill for engineering tasks where cost-aware delegation a
 - Cheap workers return `ESCALATE` rather than guess.
 - Verify deterministically whenever possible.
 
-### 2. Scientific Debugging
+### 2. Codebase Cartographer (Exploration & Orientation)
+When exploring, onboarding, or understanding architecture, use `codebase-cartographer`:
+- **Strict rule**: NEVER read dozens of full files blindly. Run `generate_map.py` first (L0 / Zero cost).
+- Use the symbol skeleton to orient yourself, locate entry points, and guide targeted reads.
+- Triggers before `spec-driven-dev` (to set boundaries) and `scientific-debugging` (to trace callers).
+
+### 3. Spec-Driven Development
+When building features or modifying behavior, use the `spec-driven-dev` skill:
+- Formulate Given-When-Then acceptance criteria before writing code.
+- Explicitly declare the allowed file boundary (use cartographer first); never edit files outside the boundary.
+- Write tests first and verify they FAIL (Red) before implementing code (Green).
+
+### 4. Scientific Debugging
 When investigating bugs, errors, or test failures, use the `scientific-debugging` skill:
 - **Triage First**:
   - *Fast-Path (Obvious Fix)*: For typos, syntax errors, or unambiguous stack traces, apply a 1-line atomic fix immediately and verify.
@@ -21,13 +33,7 @@ When investigating bugs, errors, or test failures, use the `scientific-debugging
 - Apply the smallest atomic fix addressing only the root cause.
 - Verify deterministically that the repro passes and no regressions occur.
 
-### 3. Spec-Driven Development
-When building features or modifying behavior, use the `spec-driven-dev` skill:
-- Formulate Given-When-Then acceptance criteria before writing code.
-- Explicitly declare the allowed file boundary; never edit files outside the boundary.
-- Write tests first and verify they FAIL (Red) before implementing code (Green).
-
-### 4. PR Guardian
+### 5. PR Guardian
 Before shipping or submitting a PR, use the `pr-guardian` skill:
 - Ensure zero residual debug prints (`print`, `console.log`, `debugger`) and zero secrets.
 - Perform blast-radius caller analysis on modified symbols using `rg`.

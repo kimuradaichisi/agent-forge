@@ -5,6 +5,7 @@ Portable engineering workflows for AI coding agents.
 AgentForge standardizes **how agents work**, independently from the tools they use. It bundles portable engineering skills:
 
 - **`lean-routing`**: Routes work through the cheapest reliable path (Deterministic tools -> Cheap worker -> Strong reasoning -> Mechanical verification).
+- **`codebase-cartographer`**: Ultra-lightweight deterministic codebase mapping and symbol skeleton extraction (Zero LLM cost).
 - **`scientific-debugging`**: Cost-aware hypothesis testing (Fast-path for trivial bugs, Strict Gate reproduction tests for non-trivial issues).
 - **`spec-driven-dev`**: Specification consensus (Given-When-Then), strict file boundary locking, and Red-First TDD discipline.
 - **`pr-guardian`**: Pre-ship hygiene checks, blast-radius caller analysis with `rg`, and automated ready-to-merge PR manifests.
@@ -82,6 +83,7 @@ Preview & Uninstall:
 agent-forge/
 ├── skills/
 │   ├── lean-routing/          # cost-aware delegation
+│   ├── codebase-cartographer/ # symbol maps & orientation
 │   ├── scientific-debugging/  # hypothesis-driven bug fixing
 │   ├── spec-driven-dev/       # boundary-locked TDD
 │   └── pr-guardian/           # blast-radius scan & PR manifests
