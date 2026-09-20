@@ -1,0 +1,16 @@
+description = "Run a task using AgentForge cost-aware routing."
+prompt = """
+Use the `lean-routing` skill for this request.
+
+- Execute one trivial deterministic operation directly.
+- Delegate repeated/read-heavy/large low-judgment work to @cheap-ops.
+- Delegate tiny exact edits to @cheap-edit.
+- Delegate small pattern-following implementation to @cheap-coder.
+- Use @reviewer or the parent when interpretation is required.
+- Keep architecture, ambiguity, security, migrations, concurrency, and cross-cutting decisions in the parent.
+- Cheap agents return ESCALATE rather than guess.
+- Verify changes deterministically whenever possible.
+
+User task:
+{{args}}
+"""

@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "platforms": {
+    "claude": {
+      "skill_path": ".claude/skills",
+      "agent_path": ".claude/agents",
+      "instruction_file": "CLAUDE.md",
+      "models": {
+        "cheap_ops": "haiku",
+        "cheap_edit": "haiku",
+        "cheap_coder": "sonnet",
+        "reviewer": "inherit"
+      }
+    },
+    "codex": {
+      "skill_path": ".agents/skills",
+      "agent_path": ".codex/agents",
+      "instruction_file": "AGENTS.md",
+      "models": {
+        "cheap_ops": "gpt-5.6-luna",
+        "cheap_edit": "gpt-5.6-luna",
+        "cheap_coder": "gpt-5.6-luna",
+        "reviewer": "gpt-5.6-terra"
+      }
+    },
+    "gemini": {
+      "skill_path": ".agents/skills",
+      "agent_path": ".gemini/agents",
+      "instruction_file": "GEMINI.md",
+      "models": {
+        "cheap_ops": "gemini-2.5-flash-lite",
+        "cheap_edit": "gemini-2.5-flash-lite",
+        "cheap_coder": "gemini-2.5-flash",
+        "reviewer": "inherit"
+      }
+    }
+  }
+}

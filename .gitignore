@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.zip
+.venv/
+.tmp/
+
+# Platform installation / test artifacts
+.gemini/
+.claude/
+.codex/
+.agents/
+
+# Editor / IDE
+.vscode/
+.idea/

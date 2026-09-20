@@ -1,0 +1,6 @@
+# Optional: current Codex enables multi-agent behavior by default.
+[agents]
+enabled = true
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "low"
+# max_concurrent_threads_per_session = 6

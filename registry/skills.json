@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "lean-routing": {
+      "path": "skills/lean-routing",
+      "description": "Route work to deterministic tools and the cheapest capable model before expensive reasoning.",
+      "platforms": ["claude", "codex", "gemini"]
+    }
+  }
+}

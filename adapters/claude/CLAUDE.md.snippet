@@ -1,0 +1,14 @@
+<!-- agentforge:lean-routing:start -->
+## AgentForge Lean Routing
+
+Use the `lean-routing` skill for engineering tasks where cost-aware delegation applies.
+
+- Run one trivial deterministic operation directly instead of spawning an agent.
+- Delegate repetitive/read-heavy/high-volume low-judgment work to `cheap-ops`.
+- Delegate tiny exact edits to `cheap-edit`.
+- Delegate small pattern-following implementation to `cheap-coder`.
+- Use `reviewer` or the parent for meaningful judgment.
+- Keep architecture, ambiguity, security, migrations, concurrency, and cross-cutting decisions in the parent.
+- Cheap workers return `ESCALATE` rather than guess.
+- Verify deterministically whenever possible.
+<!-- agentforge:lean-routing:end -->
