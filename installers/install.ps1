@@ -81,17 +81,17 @@ $HomeDir = if ($IsWindows -or $env:OS -like "*Windows*") { $env:USERPROFILE } el
 if ($Global) {
     switch ($Platform) {
         'claude' {
-            $SkillPath = Join-Path $HomeDir ".claude/skills/lean-routing"
+            $SkillsDir = Join-Path $HomeDir ".claude/skills"
             $AgentsPath = Join-Path $HomeDir ".claude/agents"
             $InstFile = Join-Path $HomeDir ".claude/CLAUDE.md"
         }
         'codex' {
-            $SkillPath = Join-Path $HomeDir ".agents/skills/lean-routing"
+            $SkillsDir = Join-Path $HomeDir ".agents/skills"
             $AgentsPath = Join-Path $HomeDir ".codex/agents"
             $InstFile = Join-Path $HomeDir ".codex/AGENTS.md"
         }
         'gemini' {
-            $SkillPath = Join-Path $HomeDir ".agents/skills/lean-routing"
+            $SkillsDir = Join-Path $HomeDir ".agents/skills"
             $AgentsPath = Join-Path $HomeDir ".gemini/agents"
             $InstFile = Join-Path $HomeDir ".gemini/GEMINI.md"
             $CmdsPath = Join-Path $HomeDir ".gemini/commands"
@@ -101,17 +101,17 @@ if ($Global) {
     $ResolvedTarget = if (Test-Path $Target) { (Resolve-Path $Target).Path } else { [System.IO.Path]::GetFullPath($Target) }
     switch ($Platform) {
         'claude' {
-            $SkillPath = Join-Path $ResolvedTarget ".claude/skills/lean-routing"
+            $SkillsDir = Join-Path $ResolvedTarget ".claude/skills"
             $AgentsPath = Join-Path $ResolvedTarget ".claude/agents"
             $InstFile = Join-Path $ResolvedTarget "CLAUDE.md"
         }
         'codex' {
-            $SkillPath = Join-Path $ResolvedTarget ".agents/skills/lean-routing"
+            $SkillsDir = Join-Path $ResolvedTarget ".agents/skills"
             $AgentsPath = Join-Path $ResolvedTarget ".codex/agents"
             $InstFile = Join-Path $ResolvedTarget "AGENTS.md"
         }
         'gemini' {
-            $SkillPath = Join-Path $ResolvedTarget ".agents/skills/lean-routing"
+            $SkillsDir = Join-Path $ResolvedTarget ".agents/skills"
             $AgentsPath = Join-Path $ResolvedTarget ".gemini/agents"
             $InstFile = Join-Path $ResolvedTarget "GEMINI.md"
             $CmdsPath = Join-Path $ResolvedTarget ".gemini/commands"
@@ -119,8 +119,11 @@ if ($Global) {
     }
 }
 
-# 1. Copy portable lean-routing skill
-Copy-DirectoryContent -Src (Join-Path $RepoRoot "skills/lean-routing") -Dst $SkillPath
+# 1. Copy all portable skills
+Get-ChildItem -Path (Join-Path $RepoRoot "skills") -Directory | ForEach-Object {
+    $dest = Join-Path $SkillsDir $_.Name
+    Copy-DirectoryContent -Src $_.FullName -Dst $dest
+}
 
 # 2. Copy adapter-specific agents
 Copy-DirectoryContent -Src (Join-Path $RepoRoot "adapters/$Platform/agents") -Dst $AgentsPath
@@ -140,6 +143,6 @@ switch ($Platform) {
 }
 
 Write-Host "AgentForge installed for $Platform"
-Write-Host "Skill: $SkillPath"
+Write-Host "Skills: $SkillsDir"
 Write-Host "Agents: $AgentsPath"
 Write-Host "Instructions: $InstFile"

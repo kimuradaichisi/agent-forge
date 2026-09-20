@@ -10,6 +10,7 @@ REQUIRED = [
     'README.md', 'LICENSE', 'VERSION',
     'registry/skills.json', 'registry/platforms.json',
     'skills/lean-routing/SKILL.md',
+    'skills/scientific-debugging/SKILL.md',
     'installers/install.sh', 'installers/uninstall.sh',
     'installers/install.ps1', 'installers/uninstall.ps1',
     'adapters/claude/CLAUDE.md.snippet',
@@ -33,7 +34,11 @@ def main() -> int:
 
     skill = (ROOT / 'skills/lean-routing/SKILL.md').read_text(encoding='utf-8')
     if not skill.startswith('---\n') or 'name: lean-routing' not in skill:
-        errors.append('invalid SKILL.md frontmatter')
+        errors.append('invalid lean-routing SKILL.md frontmatter')
+
+    debug_skill = (ROOT / 'skills/scientific-debugging/SKILL.md').read_text(encoding='utf-8')
+    if not debug_skill.startswith('---\n') or 'name: scientific-debugging' not in debug_skill:
+        errors.append('invalid scientific-debugging SKILL.md frontmatter')
 
     snippets = {
         'claude': 'CLAUDE.md.snippet',
@@ -51,10 +56,11 @@ def main() -> int:
         except Exception as exc:
             errors.append(f'invalid TOML {path.relative_to(ROOT)}: {exc}')
 
-    try:
-        tomllib.loads((ROOT / 'adapters/gemini/commands/lean.toml').read_text(encoding='utf-8'))
-    except Exception as exc:
-        errors.append(f'invalid Gemini command TOML: {exc}')
+    for cmd_file in ('lean.toml', 'debug.toml'):
+        try:
+            tomllib.loads((ROOT / f'adapters/gemini/commands/{cmd_file}').read_text(encoding='utf-8'))
+        except Exception as exc:
+            errors.append(f'invalid Gemini command TOML ({cmd_file}): {exc}')
 
     for shell in ('installers/install.sh', 'installers/uninstall.sh', 'adapters/claude/hooks/read-guard.sh'):
         result = subprocess.run(['bash', '-n', str(ROOT / shell)], capture_output=True, text=True)

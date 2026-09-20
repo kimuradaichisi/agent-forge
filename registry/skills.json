@@ -5,6 +5,11 @@
       "path": "skills/lean-routing",
       "description": "Route work to deterministic tools and the cheapest capable model before expensive reasoning.",
       "platforms": ["claude", "codex", "gemini"]
+    },
+    "scientific-debugging": {
+      "path": "skills/scientific-debugging",
+      "description": "Enforce minimal reproduction tests and hypothesis verification before modifying application code.",
+      "platforms": ["claude", "codex", "gemini"]
     }
   }
 }

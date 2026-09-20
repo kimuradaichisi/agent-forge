@@ -1,8 +1,8 @@
 <!-- agentforge:lean-routing:start -->
-## AgentForge Lean Routing
+## AgentForge Workflows
 
-Use the `lean-routing` skill for cost-aware engineering work.
-
+### Lean Routing
+Use the `lean-routing` skill for engineering tasks where cost-aware delegation applies:
 - Execute one trivial deterministic operation directly rather than spawning an agent.
 - Delegate repeated/read-heavy/high-volume low-judgment work to `cheap-ops`.
 - Delegate tiny exact edits to `cheap-edit`.
@@ -11,4 +11,11 @@ Use the `lean-routing` skill for cost-aware engineering work.
 - Keep architecture, ambiguity, security, migrations, concurrency, and cross-cutting decisions in the parent.
 - Cheap workers return `ESCALATE` rather than guess.
 - Prefer deterministic verification after edits.
+
+### Scientific Debugging
+When investigating bugs, errors, or test failures, use the `scientific-debugging` skill:
+- **Strict rule**: Never modify application code until you have a minimal repro test that demonstrably FAILS.
+- Formulate a single root-cause hypothesis before editing.
+- Apply the smallest atomic fix addressing only the root cause.
+- Verify deterministically that the repro passes and no regressions occur.
 <!-- agentforge:lean-routing:end -->

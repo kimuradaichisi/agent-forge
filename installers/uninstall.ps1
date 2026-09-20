@@ -56,17 +56,17 @@ $HomeDir = if ($IsWindows -or $env:OS -like "*Windows*") { $env:USERPROFILE } el
 if ($Global) {
     switch ($Platform) {
         'claude' {
-            $SkillPath = Join-Path $HomeDir ".claude/skills/lean-routing"
+            $SkillsDir = Join-Path $HomeDir ".claude/skills"
             $AgentsPath = Join-Path $HomeDir ".claude/agents"
             $InstFile = Join-Path $HomeDir ".claude/CLAUDE.md"
         }
         'codex' {
-            $SkillPath = Join-Path $HomeDir ".agents/skills/lean-routing"
+            $SkillsDir = Join-Path $HomeDir ".agents/skills"
             $AgentsPath = Join-Path $HomeDir ".codex/agents"
             $InstFile = Join-Path $HomeDir ".codex/AGENTS.md"
         }
         'gemini' {
-            $SkillPath = Join-Path $HomeDir ".agents/skills/lean-routing"
+            $SkillsDir = Join-Path $HomeDir ".agents/skills"
             $AgentsPath = Join-Path $HomeDir ".gemini/agents"
             $InstFile = Join-Path $HomeDir ".gemini/GEMINI.md"
             $CmdsPath = Join-Path $HomeDir ".gemini/commands"
@@ -76,17 +76,17 @@ if ($Global) {
     $ResolvedTarget = if (Test-Path $Target) { (Resolve-Path $Target).Path } else { [System.IO.Path]::GetFullPath($Target) }
     switch ($Platform) {
         'claude' {
-            $SkillPath = Join-Path $ResolvedTarget ".claude/skills/lean-routing"
+            $SkillsDir = Join-Path $ResolvedTarget ".claude/skills"
             $AgentsPath = Join-Path $ResolvedTarget ".claude/agents"
             $InstFile = Join-Path $ResolvedTarget "CLAUDE.md"
         }
         'codex' {
-            $SkillPath = Join-Path $ResolvedTarget ".agents/skills/lean-routing"
+            $SkillsDir = Join-Path $ResolvedTarget ".agents/skills"
             $AgentsPath = Join-Path $ResolvedTarget ".codex/agents"
             $InstFile = Join-Path $ResolvedTarget "AGENTS.md"
         }
         'gemini' {
-            $SkillPath = Join-Path $ResolvedTarget ".agents/skills/lean-routing"
+            $SkillsDir = Join-Path $ResolvedTarget ".agents/skills"
             $AgentsPath = Join-Path $ResolvedTarget ".gemini/agents"
             $InstFile = Join-Path $ResolvedTarget "GEMINI.md"
             $CmdsPath = Join-Path $ResolvedTarget ".gemini/commands"
@@ -94,8 +94,9 @@ if ($Global) {
     }
 }
 
-# 1. Remove skill directory
-Remove-PathSafe -PathToRemove $SkillPath
+# 1. Remove skill directories
+Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "lean-routing")
+Remove-PathSafe -PathToRemove (Join-Path $SkillsDir "scientific-debugging")
 
 # 2. Remove agent files
 switch ($Platform) {
@@ -114,6 +115,7 @@ switch ($Platform) {
             Remove-PathSafe -PathToRemove (Join-Path $AgentsPath $f)
         }
         Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "lean.toml")
+        Remove-PathSafe -PathToRemove (Join-Path $CmdsPath "debug.toml")
     }
 }
 

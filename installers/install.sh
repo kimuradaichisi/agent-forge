@@ -23,23 +23,27 @@ PY
 }
 if ((GLOBAL)); then
   case "$PLATFORM" in
-    claude) SKILL="$HOME/.claude/skills/lean-routing"; AGENTS="$HOME/.claude/agents"; INST="$HOME/.claude/CLAUDE.md";;
-    codex) SKILL="$HOME/.agents/skills/lean-routing"; AGENTS="$HOME/.codex/agents"; INST="$HOME/.codex/AGENTS.md";;
-    gemini) SKILL="$HOME/.agents/skills/lean-routing"; AGENTS="$HOME/.gemini/agents"; INST="$HOME/.gemini/GEMINI.md"; CMDS="$HOME/.gemini/commands";;
+    claude) SKILL_DIR="$HOME/.claude/skills"; AGENTS="$HOME/.claude/agents"; INST="$HOME/.claude/CLAUDE.md";;
+    codex) SKILL_DIR="$HOME/.agents/skills"; AGENTS="$HOME/.codex/agents"; INST="$HOME/.codex/AGENTS.md";;
+    gemini) SKILL_DIR="$HOME/.agents/skills"; AGENTS="$HOME/.gemini/agents"; INST="$HOME/.gemini/GEMINI.md"; CMDS="$HOME/.gemini/commands";;
   esac
 else
   TARGET="$(cd "$TARGET" && pwd)"
   case "$PLATFORM" in
-    claude) SKILL="$TARGET/.claude/skills/lean-routing"; AGENTS="$TARGET/.claude/agents"; INST="$TARGET/CLAUDE.md";;
-    codex) SKILL="$TARGET/.agents/skills/lean-routing"; AGENTS="$TARGET/.codex/agents"; INST="$TARGET/AGENTS.md";;
-    gemini) SKILL="$TARGET/.agents/skills/lean-routing"; AGENTS="$TARGET/.gemini/agents"; INST="$TARGET/GEMINI.md"; CMDS="$TARGET/.gemini/commands";;
+    claude) SKILL_DIR="$TARGET/.claude/skills"; AGENTS="$TARGET/.claude/agents"; INST="$TARGET/CLAUDE.md";;
+    codex) SKILL_DIR="$TARGET/.agents/skills"; AGENTS="$TARGET/.codex/agents"; INST="$TARGET/AGENTS.md";;
+    gemini) SKILL_DIR="$TARGET/.agents/skills"; AGENTS="$TARGET/.gemini/agents"; INST="$TARGET/GEMINI.md"; CMDS="$TARGET/.gemini/commands";;
   esac
 fi
-copy_tree "$ROOT/skills/lean-routing" "$SKILL"
+for skill in "$ROOT/skills"/*; do
+  if [[ -d "$skill" ]]; then
+    copy_tree "$skill" "$SKILL_DIR/$(basename "$skill")"
+  fi
+done
 copy_tree "$ROOT/adapters/$PLATFORM/agents" "$AGENTS"
 case "$PLATFORM" in
   claude) append_block "$INST" "$ROOT/adapters/claude/CLAUDE.md.snippet";;
   codex) append_block "$INST" "$ROOT/adapters/codex/AGENTS.md.snippet";;
   gemini) append_block "$INST" "$ROOT/adapters/gemini/GEMINI.md.snippet"; copy_tree "$ROOT/adapters/gemini/commands" "$CMDS";;
 esac
-printf 'AgentForge installed for %s\nSkill: %s\nAgents: %s\nInstructions: %s\n' "$PLATFORM" "$SKILL" "$AGENTS" "$INST"
+printf 'AgentForge installed for %s\nSkills: %s\nAgents: %s\nInstructions: %s\n' "$PLATFORM" "$SKILL_DIR" "$AGENTS" "$INST"

@@ -2,17 +2,12 @@
 
 Portable engineering workflows for AI coding agents.
 
-AgentForge standardizes **how agents work**, independently from the tools they use. The first bundled skill, `lean-routing`, routes work through the cheapest reliable path:
+AgentForge standardizes **how agents work**, independently from the tools they use. It bundles portable engineering skills:
 
-```text
-Eliminate
-  -> Deterministic tools
-  -> Cheap worker
-  -> Strong reasoning only when needed
-  -> Mechanical verification
-```
+- **`lean-routing`**: Routes work through the cheapest reliable path (Deterministic tools -> Cheap worker -> Strong reasoning -> Mechanical verification).
+- **`scientific-debugging`**: Eliminates trial-and-error code churn by requiring a minimal failing reproduction test before touching any production code.
 
-Adapters are included for Claude Code, OpenAI Codex, and Gemini CLI. The core skill is platform-neutral; model names and CLI-specific wiring live only in adapters.
+Adapters are included for Claude Code, OpenAI Codex, and Gemini CLI. The core skills are platform-neutral; model names and CLI-specific wiring live only in adapters.
 
 ## Quick start
 
@@ -84,7 +79,8 @@ Preview & Uninstall:
 ```text
 agent-forge/
 ├── skills/
-│   └── lean-routing/       # portable workflow
+│   ├── lean-routing/          # cost-aware delegation
+│   └── scientific-debugging/  # hypothesis-driven bug fixing
 ├── adapters/
 │   ├── claude/             # model + subagent wiring
 │   ├── codex/

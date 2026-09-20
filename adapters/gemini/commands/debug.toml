@@ -1,0 +1,14 @@
+description = "Debug an issue using AgentForge scientific-debugging protocol."
+prompt = """
+Use the `scientific-debugging` skill for this debugging task.
+
+Follow the 5-step scientific debugging protocol strictly:
+1. Collect exact error messages, logs, or stack traces deterministically.
+2. Create a minimal reproduction test case (MUST fail before any code changes). Do NOT edit application code yet.
+3. Formulate a single root-cause hypothesis explaining why it fails and what fix will turn it green.
+4. Apply the minimal atomic fix addressing only the root cause.
+5. Verify deterministically that the repro passes and no test regressions occur. Output a debugging manifest.
+
+Issue description:
+{{args}}
+"""
