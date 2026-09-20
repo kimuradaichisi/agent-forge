@@ -16,6 +16,8 @@ Adapters are included for Claude Code, OpenAI Codex, and Gemini CLI. The core sk
 
 ## Quick start
 
+### Bash (macOS / Linux / WSL)
+
 Project install:
 
 ```bash
@@ -42,6 +44,29 @@ Uninstall:
 
 ```bash
 ./installers/uninstall.sh gemini .
+```
+
+### PowerShell (Windows)
+
+Project install:
+
+```powershell
+.\installers\install.ps1 claude .
+.\installers\install.ps1 codex .
+.\installers\install.ps1 gemini .
+```
+
+Global install:
+
+```powershell
+.\installers\install.ps1 gemini -Global
+```
+
+Preview & Uninstall:
+
+```powershell
+.\installers\install.ps1 gemini . -DryRun
+.\installers\uninstall.ps1 gemini .
 ```
 
 ## Default routing

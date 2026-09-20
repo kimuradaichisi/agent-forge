@@ -11,6 +11,7 @@ REQUIRED = [
     'registry/skills.json', 'registry/platforms.json',
     'skills/lean-routing/SKILL.md',
     'installers/install.sh', 'installers/uninstall.sh',
+    'installers/install.ps1', 'installers/uninstall.ps1',
     'adapters/claude/CLAUDE.md.snippet',
     'adapters/codex/AGENTS.md.snippet',
     'adapters/gemini/GEMINI.md.snippet',
