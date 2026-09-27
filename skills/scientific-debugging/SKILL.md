@@ -1,6 +1,6 @@
 ---
 name: scientific-debugging
-description: Hypothesis-driven debugging protocol with cost-aware fast-path triage. Enforces reproduction tests for non-trivial bugs while bypassing overhead for obvious fixes.
+description: Hypothesis-driven debugging with fast-path triage. Obvious fixes go straight through; non-trivial bugs require a failing reproduction before any code change. Use when investigating bugs, errors, stack traces, failing tests, or regressions.
 ---
 
 # Scientific Debugging Skill
@@ -94,3 +94,19 @@ Every non-trivial debugging session must conclude with:
 - **Root Cause**: Why it happened.
 - **Fix Summary**: What was changed.
 - **Verification Evidence**: Proof of repro pass and suite pass.
+
+---
+
+## Tools
+
+Paths are relative to this skill's directory (the folder containing this `SKILL.md`, e.g. `.claude/skills/scientific-debugging` or `.agents/skills/scientific-debugging`). Run commands from the target repository root.
+
+| Step | Command / file |
+|---|---|
+| Prove the repro fails (Strict Gate step 2) | `python3 <skill-dir>/scripts/verify_repro.py --expect-failure -- <repro command>` |
+| Prove the fix (Strict Gate step 5) | `python3 <skill-dir>/scripts/verify_repro.py --expect-success -- <repro command>` |
+| Writing a good repro | [references/repro-guidelines.md](references/repro-guidelines.md) |
+| Full protocol | [references/debugging-protocol.md](references/debugging-protocol.md) |
+| Deliverable | Fill [templates/repro-manifest.md](templates/repro-manifest.md) |
+
+A single quoted argument is run through the shell (`verify_repro.py --expect-failure -- "pytest -k repro"`); multiple arguments are executed directly.

@@ -15,10 +15,11 @@
 import pytest
 from my_package.module import target_function
 
+
 def test_repro_issue_case():
     # Arrange minimal input that triggered bug
     payload = {"key": None}
-    
+
     # Act & Assert
     result = target_function(payload)
     assert result == expected_value

@@ -1,6 +1,6 @@
 ---
 name: codebase-cartographer
-description: Ultra-lightweight codebase mapping and context compression. Generates deterministic structural skeletons before deep exploration, preventing context pollution.
+description: Deterministic, zero-LLM-cost repository map (file tree, line counts, top-level symbols) built before any deep reading. Use when exploring or onboarding to a repository, getting an architecture overview, locating entry points, or before spec-driven-dev / scientific-debugging to set file boundaries and trace callers.
 ---
 
 # Codebase Cartographer Skill
@@ -64,3 +64,15 @@ Outputs a structured `repo-map.md`:
 - **Core Entry Points**
 - **Module & Symbol Directory**
 - **Key Data Flows**
+
+---
+
+## Tools
+
+Paths are relative to this skill's directory (the folder containing this `SKILL.md`, e.g. `.claude/skills/codebase-cartographer` or `.agents/skills/codebase-cartographer`). Run commands from the target repository root.
+
+| Step | Command / file |
+|---|---|
+| Generate the map (Step 1) | `python3 <skill-dir>/scripts/generate_map.py [repo-root]` (default `.`; prints Markdown to stdout) |
+| Persist the map (Step 4) | Fill [templates/repo-map.md](templates/repo-map.md) |
+| Heuristics for reading the map | [references/mapping-guide.md](references/mapping-guide.md) |

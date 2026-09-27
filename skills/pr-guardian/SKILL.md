@@ -1,6 +1,6 @@
 ---
 name: pr-guardian
-description: Pre-ship hygiene scanner, blast-radius analyzer, and automated PR manifest generator.
+description: Pre-ship gate that scans the git diff for leftover debug code and leaked secrets, analyzes the blast radius of changed symbols with rg, and produces a PR manifest. Use before committing, pushing, shipping, or opening a pull request.
 ---
 
 # PR Guardian Skill
@@ -51,3 +51,18 @@ Every shipping inspection produces a `pr-manifest.md`:
 - **Blast Radius (Impact Analysis)**
 - **Hygiene Verification Proof**
 - **Reviewer Checklist**
+
+---
+
+## Tools
+
+Paths are relative to this skill's directory (the folder containing this `SKILL.md`, e.g. `.claude/skills/pr-guardian` or `.agents/skills/pr-guardian`). Run commands from the target repository root.
+
+| Step | Command / file |
+|---|---|
+| Hygiene & secret scan (Step 1) | `python3 <skill-dir>/scripts/scan_diff.py [--allow-print GLOB]...` — scans `git diff HEAD` (falls back to `--cached`); exit 1 on findings |
+| Blast radius (Step 2) | `rg -n '\b<symbol>\b'` for every changed function / class / config key |
+| Rules and known false positives | [references/hygiene-rules.md](references/hygiene-rules.md) |
+| Deliverable (Step 4) | Fill [templates/pr-manifest.md](templates/pr-manifest.md) |
+
+`scan_diff.py` flags every added `print(`. For files where `print` is the intended output channel (CLI scripts), pass `--allow-print` with a repo-relative glob, e.g. `--allow-print 'scripts/*' --allow-print 'skills/*/scripts/*'`. Only `print(` is exempted; breakpoints and secrets are always reported.

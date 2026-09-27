@@ -113,13 +113,28 @@ The installer copies AgentForge-owned files and appends a marker-delimited polic
 
 Codex and Gemini share the interoperable `.agents/skills/lean-routing` location. Claude receives the same core skill under `.claude/skills/lean-routing`.
 
-## Validate
+## Development
+
+Runtime scripts are stdlib-only (Python 3.11+). [uv](https://docs.astral.sh/uv/) manages the dev toolchain (ruff, shellcheck).
+Code-size rules (file <= 300 lines, function <= 30 lines, <= 5 params) are described in [CONTRIBUTING.md](CONTRIBUTING.md#code-rules).
 
 ```bash
-python3 scripts/validate.py
-# or
-make check
+make setup    # uv sync (.venv + dev tools)
+make check    # quality gate: remove *:Zone.Identifier, ruff + shellcheck, format check, code rules, validate
+make format   # auto-format / auto-fix
+make test     # unit tests (stdlib unittest)
+make package  # dist/agent-forge-<VERSION>.zip
+make help     # list all targets
 ```
+
+To use the skills while working on this repository itself (dogfooding), link them instead of copying so edits apply immediately:
+
+```bash
+make skills-link    # .claude/skills, .claude/agents, .agents/skills -> symlinks into this repo (gitignored)
+make skills-unlink
+```
+
+Start a new agent session after linking; skills are discovered at session start.
 
 ## License
 

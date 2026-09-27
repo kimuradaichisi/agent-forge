@@ -1,8 +1,26 @@
+# OS artifacts
 .DS_Store
+Thumbs.db
+desktop.ini
+# Windows alternate data stream copies created via WSL/Explorer (e.g. `foo.md:Zone.Identifier`)
+*:Zone.Identifier
+*Zone.Identifier
+
+# Python
 __pycache__/
-*.pyc
-*.zip
+*.py[cod]
 .venv/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+
+# Build / packaging output
+dist/
+build/
+*.zip
+
+# Scratch
 .tmp/
 
 # Platform installation / test artifacts
@@ -14,3 +32,4 @@ __pycache__/
 # Editor / IDE
 .vscode/
 .idea/
+*.swp

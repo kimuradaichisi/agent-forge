@@ -1,0 +1,51 @@
+[project]
+name = "agent-forge"
+version = "0.1.0"  # keep in sync with VERSION (checked by scripts/validate.py)
+description = "Portable engineering workflows for AI coding agents."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+# Skills and scripts are stdlib-only by design; keep runtime dependencies empty.
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16",
+    "shellcheck-py>=0.11.0.1",
+]
+
+[tool.uv]
+# This repository is a collection of scripts/skills, not an installable package.
+package = false
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["dist"]
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W",  # pycodestyle / pyflakes
+    "I",            # isort
+    "B",            # bugbear
+    "UP",           # pyupgrade
+    "SIM",          # simplify
+    "C4",           # comprehensions
+    "RET",          # return
+    "PERF",         # performance
+    "PL",           # pylint (includes PLR0913 too-many-arguments)
+    "RUF",          # ruff-specific
+    "C90",          # mccabe complexity
+]
+ignore = [
+    "E501",     # line length is enforced by `ruff format`; long string literals are acceptable
+    "PLR2004",  # magic-value comparisons are fine in small CLI scripts
+]
+
+# Code rules (CONTRIBUTING.md): max 5 params per function. File (<=300 lines) and
+# function (<=30 lines) length have no ruff rule; see scripts/check_code_rules.py.
+[tool.ruff.lint.pylint]
+max-args = 5
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10

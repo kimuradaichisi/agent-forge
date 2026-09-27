@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- Fixed three `SKILL.md` descriptions that were invalid YAML and prevented the skills from loading.
+- Skill descriptions now state when to use each skill; every `SKILL.md` documents its bundled scripts, references and templates.
+- Documented a parent-performs-the-step fallback when `cheap-*` workers are unavailable.
+- Fixed the skill name in `AGENTS.md` (`gemini-lean-routing` -> `lean-routing`).
+- `check_boundary.py`: files inside new untracked directories are now checked individually (previously reported as the directory, always a violation).
+- `scan_diff.py`: new `--allow-print GLOB` option to exempt intentional CLI output from the debug-print check (secrets and breakpoints are still reported).
+- Added unit tests (`tests/`, `make test`).
+- Added uv/ruff/shellcheck tooling, `make check` quality gate (incl. `*:Zone.Identifier` cleanup), code-size rules, and `make skills-link`.
+
 ## 0.1.0 - 2026-09-20
 
 - Initial AgentForge monorepo.

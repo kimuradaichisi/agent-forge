@@ -117,4 +117,15 @@ Uncertainty: none | ...
 - Ambiguity/judgment failure: escalate immediately.
 - Never loop cheap agents until they imitate expensive reasoning.
 
-See `references/routing-policy.md` and `references/escalation-policy.md`.
+## Tools
+
+Paths are relative to this skill's directory (the folder containing this `SKILL.md`, e.g. `.claude/skills/lean-routing` or `.agents/skills/lean-routing`). Run commands from the target repository root.
+
+| Purpose | Command / file |
+|---|---|
+| Quick keyword triage of a task | `python3 <skill-dir>/scripts/route_task.py "<task description>"` → `L0_DIRECT` / `L1_CHEAP_WORKER` / `L2_OR_L3_INSPECT_SCOPE` / `L4_PARENT` |
+| Routing table | [references/routing-policy.md](references/routing-policy.md) |
+| Escalation rules | [references/escalation-policy.md](references/escalation-policy.md) |
+| Decision record | Fill [templates/decision-manifest.md](templates/decision-manifest.md) |
+
+**Missing workers:** if a named worker (`cheap-ops`, `cheap-edit`, `cheap-coder`, `reviewer`) is not installed on the current platform, or platform policy says not to spawn a subagent for the task, the parent performs the step itself under the same constraints (same scope, same verification, escalate instead of guessing). All AgentForge skills follow this fallback.

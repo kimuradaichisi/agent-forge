@@ -1,8 +1,14 @@
 # Agent Guidelines
 
+## Code Rules (hard limits)
+
+- File: **<= 300 lines**. Function / method: **<= 30 lines**. Parameters: **<= 5** (excluding `self` / `cls`).
+- Enforced by `make check` (`scripts/check_code_rules.py` + ruff `PLR0913`). Refactor instead of suppressing.
+- Run `make check` before finishing any change; it also deletes stray `*:Zone.Identifier` files.
+
 ## Cost-aware Gemini routing
 
-For repository and engineering work, use the `gemini-lean-routing` skill when applicable.
+For repository and engineering work, use the `lean-routing` skill when applicable.
 
 - Prefer deterministic tools before model reasoning.
 - Do not spawn a subagent for a single trivial tool call when direct execution is cheaper.

@@ -1,6 +1,6 @@
 ---
 name: spec-driven-dev
-description: Specification-driven development with strict boundary locking and test-first discipline. Prevents scope creep and regression before writing code.
+description: Specification-driven development with Given-When-Then acceptance criteria, a locked file boundary, and Red-First TDD. Use when implementing a new feature or changing existing behavior, before writing any production code.
 ---
 
 # Spec-Driven Development Skill
@@ -57,3 +57,16 @@ Every feature implementation must produce a structured `spec-manifest.md`:
 - **Acceptance Criteria (Given-When-Then)**
 - **Declared File Boundary**
 - **Test Command & Proof of Red -> Green transition**
+
+---
+
+## Tools
+
+Paths are relative to this skill's directory (the folder containing this `SKILL.md`, e.g. `.claude/skills/spec-driven-dev` or `.agents/skills/spec-driven-dev`). Run commands from the target repository root.
+
+| Step | Command / file |
+|---|---|
+| Spec manifest (Steps 1-2) | Fill [templates/spec-manifest.md](templates/spec-manifest.md) |
+| Red / Green proof (Steps 3-4) | Run the project's test command; the Red run must exit non-zero before implementation |
+| Boundary check (Steps 4-5) | `python3 <skill-dir>/scripts/check_boundary.py <allowed-file>...` — fails (exit 1) if `git status` shows any file outside the list |
+| TDD details | [references/tdd-protocol.md](references/tdd-protocol.md) |
