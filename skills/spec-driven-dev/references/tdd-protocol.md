@@ -12,6 +12,7 @@ State each requirement clearly:
 - If a dependency outside the boundary requires changes, STOP and ESCALATE to the parent model to expand the boundary.
 
 ## Step 3: Red Phase (Verification of Test Failure)
+For code behavior changes, follow Red-First. For bug fixes, Scientific Debugging's evidence-backed one-line Fast-Path takes precedence. Documentation-only changes use document checks. In every branch keep the declared file boundary and verify the result.
 - Run the test suite on the newly created test.
 - The test must fail for the expected reason (e.g., `AttributeError: no method 'foo'`).
 - If the test passes before implementation, the test is invalid or the feature already exists!

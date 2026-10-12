@@ -7,11 +7,11 @@ Before writing any new tests or modifying any code, evaluate the bug:
 ### Fast-Path Criteria (Obvious Fixes)
 Proceed with **Fast-Path** only if ALL of the following apply:
 1. **Unambiguous**: The stack trace, compiler error, or linter pinpointed the exact line and exact cause (e.g. typos, missing imports, obvious syntax errors, wrong config key).
-2. **Atomic**: The fix requires 1-3 lines in a single file with zero architectural implications.
+2. **Atomic**: The fix requires one line in a single file with zero architectural implications.
 3. **First Attempt**: This is NOT a second attempt after a previous fix failed.
 
 **Fast-Path Execution**:
-- Apply the edit via `cheap-edit`.
+- State the root-cause hypothesis supported by the error, then apply the one-line edit directly; use `cheap-edit` only when delegation is justified by volume.
 - Deterministically verify via compiler, linter, or existing test suite.
 - **Fail-Safe**: If the error is not completely resolved on this first try, **immediately abort Fast-Path and enter the Strict Gate**. Never attempt multiple guesses.
 

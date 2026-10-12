@@ -42,6 +42,10 @@ Delegate when work is self-contained and large, repetitive, predictable, mechani
 
 Every delegation must specify narrow goal, explicit scope, expected output, forbidden decisions, evidence requirements, and escalation conditions.
 
+Other AgentForge skills show suggested worker roles, not mandatory agent calls. Apply R0/R1 first; execute small exact tasks directly. If delegation or the configured model is unavailable, use deterministic tools or the parent and report the limitation. Do not assume named workers exist.
+
+The portable role names use hyphens. In the Codex adapter, map `cheap-ops`, `cheap-edit`, and `cheap-coder` to `cheap_ops`, `cheap_edit`, and `cheap_coder`. Use only the active platform's adapter; Gemini models are not Codex models.
+
 ## R3 — Parent / strong reasoning
 
 Keep these with the parent or stronger reviewer:
@@ -129,3 +133,5 @@ Paths are relative to this skill's directory (the folder containing this `SKILL.
 | Decision record | Fill [templates/decision-manifest.md](templates/decision-manifest.md) |
 
 **Missing workers:** if a named worker (`cheap-ops`, `cheap-edit`, `cheap-coder`, `reviewer`) is not installed on the current platform, or platform policy says not to spawn a subagent for the task, the parent performs the step itself under the same constraints (same scope, same verification, escalate instead of guessing). All AgentForge skills follow this fallback.
+
+Use the keyword helper only as a hint; check volume and risk against the routing rules. Read routing-policy when choosing a route and escalation-policy when ambiguity appears.

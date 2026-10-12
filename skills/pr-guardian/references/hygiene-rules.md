@@ -3,6 +3,7 @@
 ## Prohibited Artifacts in Diffs
 
 1. **Leftover Debug Statements**:
+   Review matches in context: intended CLI output and product logging are allowed.
    - Python: `print(`, `breakpoint()`, `import pdb; pdb.set_trace()`
    - JavaScript/TypeScript: `console.log(`, `console.debug(`, `debugger;`
    - Go: `fmt.Println(`, `println(`

@@ -20,7 +20,7 @@
   - `CallerFile:line` -> [Impact status: Tested / Unaffected]
 
 ### 4. Verification & Hygiene Checklist
-- [x] Zero leftover debug statements (`print`, `console.log`, `debugger`).
-- [x] Zero hardcoded secrets / API tokens.
-- [x] Documentation & comments synchronized with code changes.
-- [x] All automated tests passing: `[command]` (`[results]`).
+- [ ] No leftover debug statements (intended CLI output and product logging reviewed).
+- [ ] No hardcoded secrets / API tokens found in the reviewed scope.
+- [ ] Documentation & comments synchronized with code changes.
+- [ ] All automated tests passing: `[command]` (`[results]`).

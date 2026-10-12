@@ -9,7 +9,7 @@ This skill enforces high-standard pre-commit / pre-push hygiene and generates co
 
 ## The Core Principles
 
-1. **Zero Leftover Debug Code**: Prohibit residual `print`, `console.log`, `debugger`, or breakpoint statements.
+1. **Zero Leftover Debug Code**: Remove temporary debug calls and breakpoints. Intended CLI output and product logging are valid; review scanner matches in context.
 2. **Blast-Radius Awareness**: Explicitly identify and list all callers/dependents of modified symbols before shipping.
 3. **Documentation Parity**: If public APIs or configuration keys changed, corresponding documentation must be updated.
 4. **Structured PR Evidence**: Generate a ready-to-merge PR description with verification proof.
@@ -20,7 +20,7 @@ This skill enforces high-standard pre-commit / pre-push hygiene and generates co
 
 ```text
 Step 1: Hygiene & Secret Scan (L0: scan_diff.py)
-  │  Inspect git diff for leftover debug code, TODOs, and credential leaks.
+  │  Scan configured debug / secret patterns; separately check whether new TODO/FIXME comments cite an issue.
   ▼
 Step 2: Blast-Radius Extraction (L0: rg / ripgrep)
   │  Extract changed symbols and search repository for affected call-sites.
@@ -35,6 +35,8 @@ Step 4: PR Manifest Generation (L1: cheap-ops)
 ---
 
 ## Delegation to Lean Routing
+
+Worker assignments below are suggestions subject to `lean-routing` R0/R1. Perform small document checks and manifest formatting directly; use the parent when workers are unavailable.
 
 - **Step 1 (Hygiene & Secret Scan)**: Run deterministic `scan_diff.py` directly (Cost: 0).
 - **Step 2 (Blast-Radius Extraction)**: Run `rg` directly (Cost: 0).
@@ -66,3 +68,5 @@ Paths are relative to this skill's directory (the folder containing this `SKILL.
 | Deliverable (Step 4) | Fill [templates/pr-manifest.md](templates/pr-manifest.md) |
 
 `scan_diff.py` flags every added `print(`. For files where `print` is the intended output channel (CLI scripts), pass `--allow-print` with a repo-relative glob, e.g. `--allow-print 'scripts/*' --allow-print 'skills/*/scripts/*'`. Only `print(` is exempted; breakpoints and secrets are always reported.
+
+Check manifest boxes only after the corresponding evidence exists. The scanner checks tracked changes against HEAD with a small pattern set. It does not inspect untracked files or prove the absence of all secrets. Inspect git status and review new files and candidate matches before claiming verification.

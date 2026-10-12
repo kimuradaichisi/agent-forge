@@ -13,6 +13,8 @@ This skill combines the best practices of specification consensus (Copilot Works
 2. **Boundary Lock**: Declare explicitly which files may be touched. Any edits outside this boundary are rejected.
 3. **Red-First Discipline**: Write the test case first and execute it to see it FAIL before implementing production code.
 
+For bug fixes, `scientific-debugging` determines whether Fast-Path or Strict Gate applies. Its evidence-backed one-line Fast-Path is the only code-fix exception to Red-First; keep the file boundary and run existing verification. Documentation-only edits use document checks rather than artificial failing tests. The parent can approve criteria within the user's authorized scope; ask the user only when a material requirement is unresolved.
+
 ---
 
 ## 5-Step Protocol
@@ -42,6 +44,8 @@ Step 5: Refactor & Verify (L2 / L4)
 
 ## Delegation to Lean Routing
 
+The worker assignments below are suggestions subject to `lean-routing` R0/R1. Run trivial work directly and keep ambiguous requirements with the parent. If workers are unavailable, the parent performs the bounded task.
+
 - **Step 1 (Spec & Acceptance Criteria)**: Delegate draft generation to `cheap-ops`. Parent reviews and approves.
 - **Step 2 (Boundary Lock)**: Parent model declares the file boundary.
 - **Step 3 (Test Writing)**: Delegate to `cheap-coder` following pattern.
@@ -70,3 +74,5 @@ Paths are relative to this skill's directory (the folder containing this `SKILL.
 | Red / Green proof (Steps 3-4) | Run the project's test command; the Red run must exit non-zero before implementation |
 | Boundary check (Steps 4-5) | `python3 <skill-dir>/scripts/check_boundary.py <allowed-file>...` — fails (exit 1) if `git status` shows any file outside the list |
 | TDD details | [references/tdd-protocol.md](references/tdd-protocol.md) |
+
+Read tdd-protocol for test and boundary details. Review existing user changes separately and never revert them automatically.

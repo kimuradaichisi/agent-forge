@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import json
+import os
 import re
+import shutil
 import subprocess
 import tempfile
 import tomllib
@@ -129,6 +131,8 @@ def check_toml() -> list[str]:
 
 
 def check_shell_syntax() -> list[str]:
+    if os.name == "nt":
+        return []
     errors: list[str] = []
     for shell in SHELL_SCRIPTS:
         result = subprocess.run(["bash", "-n", str(ROOT / shell)], capture_output=True, text=True, check=False)
@@ -137,9 +141,28 @@ def check_shell_syntax() -> list[str]:
     return errors
 
 
+def installer_command(script: str, platform: str, target: Path) -> list[str]:
+    if os.name == "nt":
+        shell = shutil.which("pwsh") or shutil.which("powershell")
+        if shell is None:
+            raise RuntimeError("PowerShell is required for Windows validation")
+        script = Path(script).with_suffix(".ps1").name
+        return [
+            shell,
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            str(ROOT / "installers" / script),
+            platform,
+            str(target),
+        ]
+    return ["bash", str(ROOT / "installers" / script), platform, str(target)]
+
+
 def run_installer(script: str, platform: str, target: Path) -> None:
     subprocess.run(
-        ["bash", str(ROOT / f"installers/{script}"), platform, str(target)],
+        installer_command(script, platform, target),
         check=True,
         stdout=subprocess.DEVNULL,
     )
@@ -152,13 +175,13 @@ def smoke_test_platform(platform: str, target: Path) -> list[str]:
     inst.write_text(f"# Existing {platform} instructions\n\nkeep-me\n", encoding="utf-8")
     run_installer("install.sh", platform, target)
     run_installer("install.sh", platform, target)
-    text = inst.read_text(encoding="utf-8")
+    text = inst.read_text(encoding="utf-8-sig")
     if text.count(MARKER_START) != 1:
         errors.append(f"installer not idempotent: {platform}")
     if "keep-me" not in text:
         errors.append(f"installer overwrote existing content: {platform}")
     run_installer("uninstall.sh", platform, target)
-    text = inst.read_text(encoding="utf-8") if inst.exists() else ""
+    text = inst.read_text(encoding="utf-8-sig") if inst.exists() else ""
     if MARKER_START in text:
         errors.append(f"uninstall marker remained: {platform}")
     if "keep-me" not in text:
@@ -168,6 +191,7 @@ def smoke_test_platform(platform: str, target: Path) -> list[str]:
 
 def check_installers() -> list[str]:
     with tempfile.TemporaryDirectory() as td:
+        assert Path(td).resolve().is_relative_to(Path(tempfile.gettempdir()).resolve())
         return [e for platform in INSTRUCTION_NAMES for e in smoke_test_platform(platform, Path(td))]
 
 

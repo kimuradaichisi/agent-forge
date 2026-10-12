@@ -25,7 +25,7 @@ When an error or test failure occurs, perform an instant **Triage**:
   [A. Obvious / Trivial Fix]            [B. Non-Trivial / Logic Bug]
   - Syntax error, typo, missing import  - Root cause not 100% obvious
   - Stack trace pinpoint is indisputable- Involves logic or edge cases
-  - 1-2 line localized edit             - Previous fix attempt failed!
+  - One-line localized edit             - Previous fix attempt failed!
          │                                        │
          ▼                                        ▼
    【Fast-Path】                            【Strict Gate】
@@ -78,6 +78,8 @@ For all logic bugs, obscure crashes, regressions, or when a fast-path fix failed
 
 ## Delegation to Lean Routing
 
+These are suggested routes subject to `lean-routing` R0/R1. Apply a single exact fix directly instead of spawning a worker. If workers are unavailable, use deterministic tools and the parent. Fast-Path requires a one-line fix; larger or uncertain changes use Strict Gate. Form the evidence-backed hypothesis before either kind of edit.
+
 - **Triage & Fast-Path**: `cheap-edit` for immediate obvious fix + direct tool verification.
 - **Step 1 (Logs & Trace)**: Deterministic tools (`rg`, git) or `cheap-ops` for large logs.
 - **Step 2 (Repro Creation)**: `cheap-coder` or parent to craft minimal test (`tests/repro_*.py`).
@@ -110,3 +112,5 @@ Paths are relative to this skill's directory (the folder containing this `SKILL.
 | Deliverable | Fill [templates/repro-manifest.md](templates/repro-manifest.md) |
 
 A single quoted argument is run through the shell (`verify_repro.py --expect-failure -- "pytest -k repro"`); multiple arguments are executed directly.
+
+Read debugging-protocol when choosing the triage branch and repro-guidelines when constructing a test. Confirm that failure reproduces the reported bug rather than an invalid command or missing dependency.

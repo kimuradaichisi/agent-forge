@@ -28,11 +28,15 @@ SECRET_PATTERNS = [
 
 
 def read_diff() -> str:
-    res = subprocess.run(["git", "diff", "HEAD"], capture_output=True, text=True, check=False)
+    res = subprocess.run(
+        ["git", "diff", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace", check=True
+    )
     if res.stdout:
         return res.stdout
     # Check staged diff if working tree clean
-    res = subprocess.run(["git", "diff", "--cached"], capture_output=True, text=True, check=False)
+    res = subprocess.run(
+        ["git", "diff", "--cached"], capture_output=True, text=True, encoding="utf-8", errors="replace", check=True
+    )
     return res.stdout
 
 
@@ -82,7 +86,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    diff = read_diff()
+    try:
+        diff = read_diff()
+    except subprocess.CalledProcessError as exc:
+        sys.stderr.write(f"[PR-Guardian] git diff failed: {exc.stderr.strip()}\n")
+        return 2
     if not diff:
         print("[PR-Guardian] Clean: No unstaged or staged git diff detected.")
         return 0
@@ -94,7 +102,9 @@ def main() -> int:
             print(f"  - {w}", file=sys.stderr)
         return 1
 
-    print("[PR-Guardian] PASS: Diff hygiene check clean (0 residual debug calls, 0 secrets).")
+    print(
+        "[PR-Guardian] PASS: No matching hygiene patterns in tracked diff; review untracked files and scanner limits separately."
+    )
     return 0
 
 

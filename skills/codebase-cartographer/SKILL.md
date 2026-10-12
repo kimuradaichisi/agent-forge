@@ -59,6 +59,8 @@ Step 4: Output / Cache Repo Map (L1: cheap-ops)
 
 ## Deliverable: Repo Map
 
+Worker labels above are suggested routes subject to `lean-routing` R0/R1. Small inventories and exact reads run directly; use the parent when workers are unavailable. The map lists symbols, not a verified call graph or dependency graph. Confirm dependencies and callers using targeted `rg` searches before claiming a relationship.
+
 Outputs a structured `repo-map.md`:
 - **Architecture Overview**
 - **Core Entry Points**
@@ -76,3 +78,5 @@ Paths are relative to this skill's directory (the folder containing this `SKILL.
 | Generate the map (Step 1) | `python3 <skill-dir>/scripts/generate_map.py [repo-root]` (default `.`; prints Markdown to stdout) |
 | Persist the map (Step 4) | Fill [templates/repo-map.md](templates/repo-map.md) |
 | Heuristics for reading the map | [references/mapping-guide.md](references/mapping-guide.md) |
+
+Pass an existing repository path to generate_map.py; it has no --help option. Read mapping-guide when deciding what to inspect next.
