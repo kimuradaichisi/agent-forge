@@ -58,3 +58,18 @@ Codex のスキル発見場所と設定形式は [Build skills](https://learn.ch
 このリポジトリでは `.\installers\install.ps1 codex .` を実行し、5スキルを `.agents/skills/`、4担当設定を `.codex/agents/` に配置済み。スキル本体のコピー一致と指示ブロックが1つだけであることを確認した。配置先はこのリポジトリの `.gitignore` に従い追跡対象外。
 
 `$lean-routing`、`$codebase-cartographer`、`$scientific-debugging`、`$spec-driven-dev`、`$pr-guardian` の名前で呼び出す。表示されない場合は Codex を再起動する。別のリポジトリには `docs/install.md` の導入手順を使う。
+
+## 追加レビュー（2026-10-12）
+
+実際のスキル補助スクリプトを一時Gitリポジトリでも実行し、手順を守ったまま誤判定するケースを確認した。今回の変更はレビュー記録だけで、スキル本体は未変更。
+
+| 優先度 | 場所 | 確認した問題 | 改善案 |
+|---|---|---|---|
+| BLOCKER | `skills/spec-driven-dev/scripts/check_boundary.py:12-22,34-35` | 人間向けporcelainを行で分割するため、スペース・日本語名の追跡変更を許可リスト内でも逸脱扱いする。renameは移動先しか検査せず、許可外の元ファイル削除を見落とす。既存のユーザー変更も課題開始時のbaselineなしでは逸脱扱いする。 | `--porcelain=v1 -z`をNUL区切りで解析し、renameの両側を検査する。開始時baselineとの差分だけを境界判定し、事前変更にはrestoreを促さない。スペース・日本語・rename・事前変更を回帰テストする。 |
+| BLOCKER | `skills/pr-guardian/scripts/scan_diff.py:30-40,94-96` | 現在のHEADとの差だけを見るので、既にcommitしたブランチ変更はpush/PR前でも「差分なし」で通る。手元のcommit前検査としては有用でも、PR出荷前検査の説明を満たさない。 | PR baseを指定してmerge-baseからHEADまで検査するモードを追加し、base不明・fetch不足ならclean扱いしない。ステージ済み/作業中検査とはモードを分ける。commit済みbreakpointの再現を追加する。 |
+| SHOULD FIX | `skills/scientific-debugging/scripts/verify_repro.py:20-32` | `--expect-failure -- <存在しないコマンド>`もexit code 1だけで再現成功と表示する。非ゼロだけでは対象バグ・test assertion・実行環境エラーを区別できない。失敗を確認するcheckerと、根因を確認する人間の作業が混同される。 | 実行不能とテスト失敗を区別し、期待する終了コードまたはstderr条件を指定可能にする。テスト名/失敗アサーションを確認してからPASSにする。存在しない実行ファイルと、既知の失敗テストを別々に検査する。 |
+| SHOULD FIX | `skills/codebase-cartographer/scripts/generate_map.py:75-78,101-107,111-114` | 先頭ドットのディレクトリ・ファイルを一律除外するので`.github/workflows`等が地図に出ない。シンボルは最大6件だけ表示し、省略を示さない。存在しない入力パスも空の地図をexit 0で出す。 | Git管理対象や関連設定を含むinventoryへ変更し、依存物・秘密情報は明示パターンで除外する。省略数を表示し、存在しないrootは失敗にする。長大・binary fileを全文読まず上限を設ける。 |
+| SHOULD FIX | `skills/codebase-cartographer/SKILL.md:38-39`、`skills/lean-routing/scripts/route_task.py:11-31` | Cartographerは「architectureを含む探索」をgenerate_mapへ直接送るとするが、keyword routerは`architecture`をL4 parentへ送る。`overview`はL1、その他の日本語表現はfallbackになり、同じ依頼でも説明とtriage結果が一致しない。 | L0の機械的な構造抽出と、結果を解釈するparent/worker判断を別段階として明記する。説明中のautomatic routing claimを削り、誤誘導語・日本語依頼・二語混在のrouter testを追加する。 |
+| CONSIDER | `skills/spec-driven-dev/SKILL.md:40,59`、`skills/scientific-debugging/SKILL.md:74` | 再利用できるガイドがあらゆる機能でfull suiteとmanifestを必須にし、debuggingはregressionなしを保証すると記述する。一方lean-routingは影響に応じたtargeted verificationを薦める。大規模repoでは毎回高コストで、suite実行から無回帰を保証するとの表現も強い。 | projectの必須品質gateを優先しつつ、対象テスト→必要時に広いsuiteという段階を説明する。manifestはプロジェクト要件または複数工程で必要な場合に保存し、no-regressionsは実行したcoverageの範囲に限定する。 |
+
+優先着手はboundary parser、PR base比較、repro checkerの3件。cartographerとrouterの修正は、その後に小さい一貫した変更として扱う。上記は未実装の改善提案であり、この追補でスキルの実行可否や既存の検証実績を書き換えてはいない。
